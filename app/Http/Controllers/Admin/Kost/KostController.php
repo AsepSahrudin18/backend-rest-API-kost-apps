@@ -154,6 +154,22 @@ class KostController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $kost = Kost::find($id);
+
+        if($kost){
+            // membuat deskripsi/keterangan
+        $kost->delete();
+
+        $data = [
+            "message" => "Delete Kost Successfuly!",
+            "data" => $kost
+        ];
+        return response()->json($data, 200);
+        }else{
+            $data = [
+                "message" => "Resource Not Found"
+            ];
+            return response()->json($data, 404);
+        }
     }
 }
