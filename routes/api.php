@@ -3,11 +3,13 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 // import controller
-use App\Http\Controllers\Admin\Fasilitas\FasilitasController;
-use App\Http\Controllers\Admin\Kost\KostController;
-use App\Http\Controllers\Admin\Kota\KotaController;
-use App\Http\Controllers\Admin\Rekomendasi\RekomendasiController;
-use App\Http\Controllers\Admin\Auth\AuthController;
+use App\Http\Controllers\Admin\{
+    Fasilitas\FasilitasController,
+    Kost\KostController,
+    Kota\KotaController,
+    Rekomendasi\RekomendasiController,
+    Auth\AuthController
+};
 
 /*
 |--------------------------------------------------------------------------
@@ -42,11 +44,12 @@ Route::middleware('auth:sanctum')->group( function() {
     Route::resource('kota', KotaController::class);
     Route::resource('kost', KostController::class);
     Route::resource('rekomendasi', RekomendasiController::class);
+    Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 });
 /**
  * Route authentication
  * - register
  * - login
  */
- Route::post('register', [AuthController::class, 'register']);
- Route::post('login', [AuthController::class, 'login']);
+ Route::post('register', [AuthController::class, 'register'])->name('register');
+ Route::post('login', [AuthController::class, 'login'])->name('login');
