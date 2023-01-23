@@ -1,7 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\Frontend\TestController;
+// use App\Http\Controllers\Frontend\FasilitasController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -16,3 +16,6 @@ use App\Http\Controllers\Frontend\TestController;
 Route::get('/', function () {
     return view('welcome');
 });
+// $response = Http::get('http://127.0.0.1:8000/api/fasilitas');
+// Route::get('coba', compact('response'));
+// Route::get('test', [FasilitasController::class, 'index']);

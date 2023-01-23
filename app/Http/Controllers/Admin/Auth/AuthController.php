@@ -10,8 +10,10 @@ use Illuminate\Http\Request;
  * import hash
  */
 use App\Models\User;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\{
+    Auth,
+    Hash
+};
 
 class AuthController extends Controller
 {
@@ -56,5 +58,13 @@ class AuthController extends Controller
                 "message" => "Login failed" 
             ]); 
         } 
+    }
+
+    public function logout()
+    {        
+        Auth::user()->tokens()->delete();
+        return response()->json([
+            'message' => 'logout successfuly!'
+        ]);
     }
 }
