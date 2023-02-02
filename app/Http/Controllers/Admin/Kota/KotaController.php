@@ -156,4 +156,16 @@ class KotaController extends Controller
     }
         return response()->json($data, 200);
     }
+
+    function search($kota)
+    {
+        $result = Kota::where('nama_kota', 'LIKE', '%'. $kota. '%')->get();
+        if(count($result)){
+         return Response()->json($result);
+        }
+        else
+        {
+        return response()->json(['Result' => 'No Data not found'], 404);
+      }
+    }
 }
