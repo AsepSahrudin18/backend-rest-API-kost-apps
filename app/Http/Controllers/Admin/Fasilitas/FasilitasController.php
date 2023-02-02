@@ -156,4 +156,16 @@ class FasilitasController extends Controller
     }
         return response()->json($data, 200);
     }
+
+    function search($fasilitas)
+    {
+        $result = Fasilitas::where('fasilitas', 'LIKE', '%'. $fasilitas. '%')->get();
+        if(count($result)){
+         return Response()->json($result);
+        }
+        else
+        {
+        return response()->json(['Result' => 'No Data not found'], 404);
+      }
+    }
 }

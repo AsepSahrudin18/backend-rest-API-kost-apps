@@ -41,8 +41,11 @@ use App\Http\Controllers\Admin\{
  */
 Route::middleware('auth:sanctum')->group( function() {
     Route::resource('fasilitas', FasilitasController::class);
+    Route::get('fasilitas/search/{fasilitas}', [FasilitasController::class, 'search'])->name('search.search');
     Route::resource('kota', KotaController::class);
+    Route::get('kota/search/{kota}', [KotaController::class, 'search'])->name('search.search');
     Route::resource('kost', KostController::class);
+    Route::get('kosts/search/{kost}', [KostController::class, 'search'])->name('search.search');
     Route::resource('rekomendasi', RekomendasiController::class);
     Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 });

@@ -172,4 +172,16 @@ class KostController extends Controller
             return response()->json($data, 404);
         }
     }
+
+    function search($kost)
+    {
+        $result = Kost::where('keterangan', 'LIKE', '%'. $kost. '%')->get();
+        if(count($result)){
+         return Response()->json($result);
+        }
+        else
+        {
+        return response()->json(['Result' => 'No Data not found'], 404);
+      }
+    }
 }
