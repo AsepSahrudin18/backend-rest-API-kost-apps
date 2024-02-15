@@ -39,7 +39,7 @@ use App\Http\Controllers\Admin\{
  * delete
  * post
  */
-Route::middleware('auth:sanctum')->group( function() {
+Route::middleware(['auth:sanctum'])->group( function() {
     Route::resource('fasilitas', FasilitasController::class);
     Route::get('fasilitas/search/{fasilitas}', [FasilitasController::class, 'search'])->name('search.search');
     Route::resource('kota', KotaController::class);
@@ -47,6 +47,10 @@ Route::middleware('auth:sanctum')->group( function() {
     Route::resource('kost', KostController::class);
     Route::get('kosts/search/{kost}', [KostController::class, 'search'])->name('search.search');
     Route::resource('rekomendasi', RekomendasiController::class);
+});
+
+Route::middleware('auth:sanctum')->group(function(){
+    Route::get('/user', [AuthController::class, 'user'])->name('user');
     Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 });
 /**

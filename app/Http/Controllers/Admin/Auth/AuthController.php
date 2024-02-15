@@ -22,7 +22,8 @@ class AuthController extends Controller
         $input = [
             'name'=>$request->name,
             'password'=>Hash::make($request->password),
-            'email'=>$request->email
+            'email'=>$request->email,
+            'role_id'=>$request->role_id,
         ];
 
         $user = User::create($input);
@@ -37,7 +38,7 @@ class AuthController extends Controller
     public function login(Request $request) { 
         $input = [ 
             "email" => $request->email, 
-            "password" => $request->password, 
+            "password" => $request->password,  
         ]; 
         
         $user = User::where("email", $input["email"])->first(); 
@@ -66,5 +67,21 @@ class AuthController extends Controller
         return response()->json([
             'message' => 'logout successfuly!'
         ]);
+    }
+
+    public function user()
+    {
+        $user = Auth::user();
+
+        if ($user) {
+            $data = [
+                'message' => 'Get Authorization User',
+                'success' => true,
+                'user' => $user
+            ];
+            return response()->json($data, 200);
+        } 
+
+        return response()->json(['message' => 'Unauthorized'], 403);
     }
 }

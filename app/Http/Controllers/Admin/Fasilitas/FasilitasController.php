@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 // import model
 use App\Models\Fasilitas;
+use Auth;
 
 class FasilitasController extends Controller
 {
@@ -20,11 +21,20 @@ class FasilitasController extends Controller
 
         if($fasilitas){
             // membuat deskripsi/keterangan
-        $data = [
-            "message" => "Get All Resource",
-            "data" => $fasilitas
-        ];
-        return response()->json($data, 200);
+            $data = [
+                "message" => "Get All Resource",
+                "data" => $fasilitas
+            ];
+
+            if(Auth::user()->role_id === 2 || Auth::user()->role_id === 3){
+                return response()->json($data, 200);
+            }elseif(Auth::user()->role_id === 1){
+                $data = [
+                    "message" => "Permission Denied!"
+                ];
+        
+                return response()->json($data, 403);
+            }
         }else{
             $data = [
                 "message" => "Resource Not Found"
@@ -51,16 +61,26 @@ class FasilitasController extends Controller
      */
     public function store(Request $request)
     {
-        $input = [
-            'fasilitas' => $request->fasilitas,
-        ];
-
-        $fasilitas = Fasilitas::create($input);
+        if(Auth::user()->role_id === 2 || Auth::user()->role_id === 3){
+            $input = [
+                'fasilitas' => $request->fasilitas,
+            ];
+    
+            $fasilitas = Fasilitas::create($input);
             $data = [
                 "message"=>"Fasilitas is Created!",
                 "data" => $fasilitas,
             ];
             return response()->json($data, 201);
+        }elseif(Auth::user()->role_id === 1){
+            $data = [
+                "message" => "Permission Denied!"
+            ];
+    
+            return response()->json($data, 403);
+        }
+
+        return redirect()->back();
     }
 
     /**
@@ -107,6 +127,7 @@ class FasilitasController extends Controller
      */
     public function update(Request $request, $id)
     {
+        // dd($request->all());
         $fasilitas = Fasilitas::find($id);
 
         if($fasilitas){
